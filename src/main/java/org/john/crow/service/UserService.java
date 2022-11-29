@@ -4,7 +4,9 @@
  */
 package org.john.crow.service;
 
+import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;
+import org.john.crow.pojo.records.User;
 
 import java.util.Optional;
 
@@ -28,4 +30,13 @@ public interface UserService {
      * @return if user is not found,return null otherwise return user
      */
     Optional<Users> queryByUserName(String username);
+
+
+    /**
+     * create user
+     *
+     * @param userBo user.username and password
+     * @return if create user error, return null otherwise return user
+     */
+    User createUser(UserBo userBo);
 }

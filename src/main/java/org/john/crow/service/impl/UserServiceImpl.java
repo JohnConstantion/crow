@@ -4,13 +4,20 @@
  */
 package org.john.crow.service.impl;
 
+import org.john.crow.common.eumns.Sex;
+import org.john.crow.common.util.DateUtil;
+import org.john.crow.common.util.BaseUtils;
 import org.john.crow.mapper.UserJpaRepository;
+import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;
+import org.john.crow.pojo.records.User;
 import org.john.crow.service.UserService;
+import org.n3r.idworker.Sid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -20,6 +27,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserJpaRepository userJpaRepository;
+    private static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
 
     public UserServiceImpl(UserJpaRepository userJpaRepository) {
         this.userJpaRepository = userJpaRepository;
@@ -34,5 +42,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<Users> queryByUserName(String username) {
         return userJpaRepository.findByUsername(username);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    @Override
+    public User createUser(UserBo userBo) {
+        Users users = new Users();
+        users.setId(Sid.next());
+        users.setUsername(userBo.getUsername());
+        users.setPassword(BaseUtils.getBase64(userBo.getPassword()));
+        // default nickname is username
+        users.setNickname(userBo.getUsername());
+        // default face
+        users.setFace(USER_FACE);
+        // default birthday
+        users.setBirthday(DateUtil.stringToDate("1900-01-01"));
+        // default sex
+        users.setSex(Sex.SECRET.type);
+
+        users.setCreatedTime(new Date());
+        users.setUpdatedTime(new Date());
+
+        userJpaRepository.save(users);
+        return new User(users.getId(), users.getNickname(), users.getFace(), users.getSex());
     }
 }
