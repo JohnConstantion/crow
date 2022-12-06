@@ -4,7 +4,7 @@
  */
 package org.john.crow.api;
 
-import io.micrometer.common.util.StringUtils;
+import jakarta.validation.Valid;
 import org.john.crow.common.util.JsonResult;
 import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;
@@ -19,17 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/passport")
 public class UserController {
     private final UserService userService;
-    private final Integer SIX = 6;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/username_is_exist")
-    public JsonResult queryUserByUserName(String username) {
-        if (StringUtils.isEmpty(username)) {
-            return JsonResult.errorMsg("name must be have value");
-        }
+    public JsonResult queryUserByUserName(@RequestParam String username) {
         Users users = userService.queryByUserName(username).orElse(null);
         if (null != users) {
             return JsonResult.errorMsg("User is found, Please try other name");
@@ -38,18 +34,10 @@ public class UserController {
     }
 
     @PostMapping("/regist")
-    public JsonResult createUser(@RequestBody UserBo userBo) {
-        if (StringUtils.isEmpty(userBo.getUsername()) || StringUtils.isEmpty(userBo.getPassword()) || StringUtils.isEmpty(userBo.getConfirmPassword())) {
-            return JsonResult.errorMsg("username or password must be have value");
-        }
-
+    public JsonResult createUser(@Valid @RequestBody UserBo userBo) {
         Users users = userService.queryByUserName(userBo.getUsername()).orElse(null);
         if (null != users) {
             return JsonResult.errorMsg("User is found, Please try other name");
-        }
-
-        if (userBo.getPassword().length() < SIX) {
-            return JsonResult.errorMsg("password length must be greater then " + SIX);
         }
 
         if (!userBo.getPassword().equals(userBo.getConfirmPassword())) {
