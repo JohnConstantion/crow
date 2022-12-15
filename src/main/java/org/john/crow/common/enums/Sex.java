@@ -1,4 +1,4 @@
-package org.john.crow.common.eumns;
+package org.john.crow.common.enums;
 
 public enum Sex {
     /**

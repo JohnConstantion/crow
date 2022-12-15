@@ -4,7 +4,7 @@
  */
 package org.john.crow.service.impl;
 
-import org.john.crow.common.eumns.Sex;
+import org.john.crow.common.enums.Sex;
 import org.john.crow.common.util.DateUtil;
 import org.john.crow.common.util.BaseUtils;
 import org.john.crow.mapper.UserJpaRepository;

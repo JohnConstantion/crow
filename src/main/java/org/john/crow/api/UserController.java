@@ -33,7 +33,7 @@ public class UserController {
         return JsonResult.ok();
     }
 
-    @PostMapping("/regist")
+    @PostMapping("/register")
     public JsonResult createUser(@Valid @RequestBody UserBo userBo) {
         Users users = userService.queryByUserName(userBo.getUsername()).orElse(null);
         if (null != users) {
