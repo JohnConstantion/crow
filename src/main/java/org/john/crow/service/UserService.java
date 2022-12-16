@@ -39,4 +39,13 @@ public interface UserService {
      * @return if create user error, return null otherwise return user
      */
     User createUser(UserBo userBo);
+
+    /**
+     * select user by username and password
+     *
+     * @param username username
+     * @param password password
+     * @return {@code User}if user not found,return null otherwise return user
+     */
+    User queryUserForLogin(String username, String password);
 }

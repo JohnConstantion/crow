@@ -16,8 +16,18 @@ public interface UserJpaRepository extends CrudRepository<Users, Long> {
 
     /**
      * select user by username
+     *
      * @param username {@code User.username}
      * @return if user is not found,return null otherwise return user
      */
     Optional<Users> findByUsername(String username);
+
+    /**
+     * select user by username and password
+     *
+     * @param username username
+     * @param password password
+     * @return {@code user}
+     */
+    Optional<Users> findUsersByUsernameAndPassword(String username, String password);
 }

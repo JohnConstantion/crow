@@ -6,6 +6,7 @@ package org.john.crow.api;
 
 import jakarta.validation.Valid;
 import org.john.crow.common.util.JsonResult;
+import org.john.crow.pojo.bo.LoginBo;
 import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;
 import org.john.crow.pojo.records.User;
@@ -47,6 +48,15 @@ public class UserController {
         User user = userService.createUser(userBo);
         if (null == user) {
             return JsonResult.errorMsg("create user failed");
+        }
+        return JsonResult.ok(user);
+    }
+
+    @PostMapping("/login")
+    public JsonResult login(@Valid @RequestBody LoginBo loginBo) {
+        User user = userService.queryUserForLogin(loginBo.getUsername(), loginBo.getPassword());
+        if (null == user) {
+            return JsonResult.errorMsg("User is not found,please check username or password");
         }
         return JsonResult.ok(user);
     }

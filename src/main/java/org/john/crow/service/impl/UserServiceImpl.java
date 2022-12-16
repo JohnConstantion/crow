@@ -66,4 +66,14 @@ public class UserServiceImpl implements UserService {
         userJpaRepository.save(users);
         return new User(users.getId(), users.getNickname(), users.getFace(), users.getSex());
     }
+
+    @Override
+    public User queryUserForLogin(String username, String password) {
+        Optional<Users> user = userJpaRepository.findUsersByUsernameAndPassword(username, BaseUtils.getBase64(password));
+        if (user.isPresent()) {
+            Users users = user.get();
+            return new User(users.getId(), users.getNickname(), users.getFace(), users.getSex());
+        }
+        return null;
+    }
 }
