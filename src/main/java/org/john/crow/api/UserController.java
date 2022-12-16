@@ -4,8 +4,12 @@
  */
 package org.john.crow.api;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.john.crow.common.util.JsonResult;
+import org.john.crow.common.utils.CookieUtils;
+import org.john.crow.common.utils.JsonResult;
+import org.john.crow.common.utils.JsonUtils;
 import org.john.crow.pojo.bo.LoginBo;
 import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;
@@ -35,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public JsonResult createUser(@Valid @RequestBody UserBo userBo) {
+    public JsonResult createUser(@Valid @RequestBody UserBo userBo, HttpServletRequest request, HttpServletResponse response) {
         Users users = userService.queryByUserName(userBo.getUsername()).orElse(null);
         if (null != users) {
             return JsonResult.errorMsg("User is found, Please try other name");
@@ -49,15 +53,17 @@ public class UserController {
         if (null == user) {
             return JsonResult.errorMsg("create user failed");
         }
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(user), true);
         return JsonResult.ok(user);
     }
 
     @PostMapping("/login")
-    public JsonResult login(@Valid @RequestBody LoginBo loginBo) {
+    public JsonResult login(@Valid @RequestBody LoginBo loginBo, HttpServletRequest request, HttpServletResponse response) {
         User user = userService.queryUserForLogin(loginBo.getUsername(), loginBo.getPassword());
         if (null == user) {
             return JsonResult.errorMsg("User is not found,please check username or password");
         }
+        CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(user), true);
         return JsonResult.ok(user);
     }
 

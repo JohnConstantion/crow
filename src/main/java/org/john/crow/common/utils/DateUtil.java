@@ -1,4 +1,4 @@
-package org.john.crow.common.util;
+package org.john.crow.common.utils;
 
 import io.micrometer.common.util.StringUtils;
 

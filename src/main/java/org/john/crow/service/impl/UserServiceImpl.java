@@ -5,8 +5,8 @@
 package org.john.crow.service.impl;
 
 import org.john.crow.common.enums.Sex;
-import org.john.crow.common.util.DateUtil;
-import org.john.crow.common.util.BaseUtils;
+import org.john.crow.common.utils.DateUtil;
+import org.john.crow.common.utils.BaseUtils;
 import org.john.crow.mapper.UserJpaRepository;
 import org.john.crow.pojo.bo.UserBo;
 import org.john.crow.pojo.entity.Users;

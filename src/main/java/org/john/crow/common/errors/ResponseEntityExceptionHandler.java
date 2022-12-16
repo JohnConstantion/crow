@@ -2,7 +2,7 @@ package org.john.crow.common.errors;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
-import org.john.crow.common.util.JsonResult;
+import org.john.crow.common.utils.JsonResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;

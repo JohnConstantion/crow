@@ -2,7 +2,7 @@
  * Copyright (c) 2022, Constantine John. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  */
-package org.john.crow.common.util;
+package org.john.crow.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
